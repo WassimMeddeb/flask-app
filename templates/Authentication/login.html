@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Righteous:wght@400&display=swap"
+    />
+  </head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column; /* Ensure elements stack vertically */
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Use min-height instead of height */
+      background-color: #f3f4f6;
+      font-family: Arial, sans-serif;
+    }
+
+    .quote {
+      color: #ffffff;
+      font-size: 24px;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 20px; /* Add margin bottom for spacing */
+      text-align: center; /* Center the text */
+    }
+
+    form {
+      width: 90%;
+      max-width: 400px;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    form input[type="email"],
+    form input[type="password"],
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 2px solid #1ab0c7;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    input[type="submit"] {
+      background-color: #1ab0c7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #148c9f;
+    }
+
+    @media only screen and (max-width: 768px) {
+      form {
+        width: 90%;
+        max-width: 350px; /* Adjust max-width for smaller screens */
+      }
+      .quote {
+        font-size: 28px; /* Increase font size for smaller screens */
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      form {
+        width: 90%;
+        max-width: 300px; /* Adjust max-width for even smaller screens */
+      }
+      .quote {
+        font-size: 20px; /* Further increase font size for smallest screens */
+      }
+    }
+
+    body {
+      background-image: url("{% static 'images/background-img.png' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 80%;
+    }
+    .access {
+      padding-top: 20px;
+      padding-left: 43px;
+    }
+  </style>
+  <body>
+    <form action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      <label for="email">Email:</label>
+      <input type="email" name="username" id="email" required />
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" required />
+      <input type="submit" value="Sign In" />
+      <label class="access">For access, please contact the responsible</label>
+    </form>
+  </body>
+</html>

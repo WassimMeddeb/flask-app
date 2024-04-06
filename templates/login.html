@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Righteous:wght@400&display=swap"
+    />
+    <link rel="shortcut icon" href="../static/images/fav.ico" type="image/x-icon">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column; /* Ensure elements stack vertically */
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Use min-height instead of height */
+        background-color: #f3f4f6;
+        font-family: Arial, sans-serif;
+      }
+  
+      .quote {
+        color: #ffffff;
+        font-size: 24px;
+        letter-spacing: 0.1em;
+        font-weight: 600;
+        margin-bottom: 20px; /* Add margin bottom for spacing */
+        text-align: center; /* Center the text */
+      }
+  
+      form {
+        width: 90%;
+        max-width: 400px;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+  
+      form label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+      }
+  
+      form input[type="email"],
+      form input[type="password"],
+      input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 2px solid #1ab0c7;
+        border-radius: 10px;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+  
+      input[type="submit"] {
+        background-color: #1ab0c7;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+  
+      input[type="submit"]:hover {
+        background-color: #148c9f;
+      }
+  
+      @media only screen and (max-width: 768px) {
+        form {
+          width: 90%;
+          max-width: 350px; /* Adjust max-width for smaller screens */
+        }
+        .quote {
+          font-size: 28px; /* Increase font size for smaller screens */
+        }
+      }
+  
+      @media only screen and (max-width: 480px) {
+        form {
+          width: 90%;
+          max-width: 300px; /* Adjust max-width for even smaller screens */
+        }
+        .quote {
+          font-size: 20px; /* Further increase font size for smallest screens */
+        }
+      }
+  
+      body {
+        background-image: url("../static/images/background-img.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        opacity: 80%;
+      }
+      .access {
+        padding-top: 20px;
+        padding-left: 43px;
+      }
+      span{
+        color: red;
+      }
+      .message {
+              display: none;
+              position: fixed;
+              top: 10px;
+              left: 50%;
+              transform: translateX(-50%);
+              padding: 10px;
+              border-radius: 5px;
+              color: #fff;
+              font-weight: bold;
+              z-index: 9999;
+          }
+  
+          .error {
+              background-color: #f8d7da;
+              color: #721c24;
+              border: 1px solid #f5c6cb;
+              background-color: #dc3545;
+          }
+  
+          .success {
+              background-color: #d4edda;
+              color: #155724;
+              border: 1px solid #c3e6cb;
+              background-color: #28a745;
+          }
+          .info {
+    background-color: #1096bf;
+    color: #ffffff;
+    border: 1px solid #c3e6cb;
+  }
+  
+    </style>
+  </head>
+  
+  <body>
+    <!-- Notification -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form id="loginForm" action="/login" method="POST">
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" required />
+      <span id="emailError" class="text-danger"></span>
+  
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" required />
+      <span id="passwordError" class="text-danger"></span>
+  
+      <input type="submit" value="Sign In" />
+      <label class="access">For access, please contact the responsible</label>
+    </form>
+    <script>
+      const form = document.getElementById('loginForm');
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+  
+      form.addEventListener('submit', function(event) {
+        let valid = true;
+  
+        // Email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email.value.trim())) {
+          valid = false;
+          document.getElementById('emailError').innerText = 'Enter a valid email address';
+        } else {
+          document.getElementById('emailError').innerText = '';
+        }
+  
+        // Password validation
+        if (password.value.trim() === '' || password.value.length < 8) {
+          valid = false;
+          document.getElementById('passwordError').innerText = 'Password is required';
+        } else {
+          document.getElementById('passwordError').innerText = '';
+        }
+  
+        if (!valid) {
+          event.preventDefault(); // Prevent form submission if there are errors
+        }
+      });
+      const messages = document.querySelectorAll('.message');
+
+        // Loop through each message to apply styling and set timeout to hide
+        messages.forEach(message => {
+            // Apply styling
+            message.style.display = 'block';
+
+            // Hide message after 2 seconds
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2000); // 2 seconds (2000 milliseconds)
+        });
+    </script>
+  </body>
+</html>

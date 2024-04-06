@@ -1,0 +1,143 @@
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registration Page</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous:wght@400&display=swap" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f3f4f6;
+      font-family: Arial, sans-serif;
+      background-image: url("{% static 'images/background-img.png' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 80%;
+    }
+
+    .quote {
+      color: #ffffff;
+      font-size: 24px;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      width: 90%;
+      max-width: 400px;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"],
+    button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 2px solid #1ab0c7;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    button[type="submit"] {
+      background-color: #1ab0c7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #148c9f;
+    }
+
+    @media only screen and (max-width: 768px) {
+      form {
+        width: 90%;
+        max-width: 350px;
+      }
+      .quote {
+        font-size: 28px;
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      form {
+        width: 90%;
+        max-width: 300px;
+      }
+      .quote {
+        font-size: 20px;
+      }
+    }
+
+    .access {
+      padding-top: 20px;
+      padding-left: 43px;
+    }
+  </style>
+</head>
+<body>
+
+<form method="POST" action="{% url 'register' %}">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="{{ form.username.id_for_label}}">Username:</label>
+    <input type="text" name="{{ form.username.name }}" class="form-control" value="{{ form.username.value}}" />
+    {% if form.username.errors %}
+    <span class="text-danger">{{ form.username.errors }}</span>
+    {% endif %}
+</div>
+<div class="form-group">
+  <div class="form-group">
+    <label for="{{ form.email.id_for_label }}">Email:</label>
+    <input type="email" name="{{ form.email.name }}" class="form-control" value="{{ form.email.value }}" required>
+    {% if form.email.errors %}
+        {% for error in form.email.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    {% endif %}
+</div>
+
+</div>
+  <div class="field">
+    <div class="form-group">
+      <label for="{{ form.password1.id_for_label}}">Password:</label>
+      <input type="password" name="{{ form.password1.name }}" class="form-control" value="{{ form.password1.value}}" />
+      <span class="text-danger">{{ form.password1.errors }}</span>
+  </div>
+  <div class="form-group">
+      <label for="{{ form.password2.id_for_label}}">Confirm Password:</label>
+      <input type="password" name="{{ form.password2.name }}" class="form-control" value="{{ form.password2.value}}" />
+      <span class="text-danger">{{ form.password2.errors }}</span>
+  </div>
+  <button type="submit">Sign In</button>
+</form>
+{% endblock %}
+ 
+
+</body>
+</html>

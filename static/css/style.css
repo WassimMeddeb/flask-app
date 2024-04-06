@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+.error-text{
+    background: #F8D7DA;
+    padding: 8px 0;
+    border-radius: 5px;
+    color: #8B3E46;
+    border: 1px solid #F5C6CB;
+    display: none;
+  }
+  .show{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 600;
+    user-select: none;
+    cursor: pointer;
+    display: none;
+  }

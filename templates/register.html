@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registration Page</title>
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous:wght@400&display=swap" />
+  <link rel="shortcut icon" href="../static/images/fav.ico" type="image/x-icon">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f3f4f6;
+      font-family: Arial, sans-serif;
+      background-image: url("../static/images/background-img.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 80%;
+    }
+
+    .quote {
+      color: #ffffff;
+      font-size: 24px;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      width: 90%;
+      max-width: 400px;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"],
+    button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 2px solid #1ab0c7;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    button[type="submit"] {
+      background-color: #1ab0c7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #148c9f;
+    }
+
+    @media only screen and (max-width: 768px) {
+      form {
+        width: 90%;
+        max-width: 350px;
+      }
+      .quote {
+        font-size: 28px;
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      form {
+        width: 90%;
+        max-width: 300px;
+      }
+      .quote {
+        font-size: 20px;
+      }
+    }
+
+    .access {
+      padding-top: 20px;
+      padding-left: 43px;
+    }
+    span{
+      color: red;
+    }
+    .message {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+            z-index: 9999;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            background-color: #dc3545;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            background-color: #28a745;
+        }
+        .info {
+  background-color: #1096bf;
+  color: #ffffff;
+  border: 1px solid #c3e6cb;
+}
+  </style>
+</head>
+<body>
+  <!-- Notification -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+  <form id="registrationForm" method="POST" action="/register">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" class="form-control" value="">
+      <span id="usernameError" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" class="form-control" value="" required>
+      <span id="emailError" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" class="form-control" value="">
+      <span id="passwordError" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+      <label for="confirm_password">Confirm Password:</label>
+      <input type="password" name="confirm_password" id="confirm_password" class="form-control" value="">
+      <span id="confirmPasswordError" class="text-danger"></span>
+    </div>
+    <button type="submit" id="submitButton">Register</button>
+  </form>
+  
+  <script>
+    const form = document.getElementById('registrationForm');
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm_password');
+    const submitButton = document.getElementById('submitButton');
+  
+    form.addEventListener('submit', function(event) {
+      let valid = true;
+  
+      // Username validation
+      if (username.value.trim() === '') {
+        valid = false;
+        document.getElementById('usernameError').innerText = 'Username is required';
+      } else {
+        document.getElementById('usernameError').innerText = '';
+      }
+  
+      // Email validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email.value.trim())) {
+        valid = false;
+        document.getElementById('emailError').innerText = 'Enter a valid email address';
+      } else {
+        document.getElementById('emailError').innerText = '';
+      }
+  
+      // Password validation
+      if (password.value.trim() === '') {
+        valid = false;
+        document.getElementById('passwordError').innerText = 'Password is required';
+      } else if (password.value.length < 8) {
+        valid = false;
+        document.getElementById('passwordError').innerText = 'Password should be at least 8 characters';
+      } else if (password.value.toLowerCase().includes(username.value.toLowerCase())) {
+        valid = false;
+        document.getElementById('passwordError').innerText = 'Password should not contain username';
+      } else if (password.value.toLowerCase().includes(email.value.toLowerCase())) {
+        valid = false;
+        document.getElementById('passwordError').innerText = 'Password should not contain email';
+      } else if (!/[a-zA-Z]/.test(password.value) || !/\d/.test(password.value) || !/[!@#$%^&*]/.test(password.value)) {
+        valid = false;
+        document.getElementById('passwordError').innerText = 'Password should contain letters, numbers, and symbols (!@#$%^&*)';
+      } else {
+        document.getElementById('passwordError').innerText = '';
+      }
+  
+      // Confirm Password validation
+      if (confirmPassword.value.trim() === '') {
+        valid = false;
+        document.getElementById('confirmPasswordError').innerText = 'Please confirm your password';
+      } else if (confirmPassword.value.trim() !== password.value.trim()) {
+        valid = false;
+        document.getElementById('confirmPasswordError').innerText = 'Passwords do not match';
+      } else {
+        document.getElementById('confirmPasswordError').innerText = '';
+      }
+  
+      if (!valid) {
+        event.preventDefault(); 
+      }
+    });
+    const messages = document.querySelectorAll('.message');
+
+// Loop through each message to apply styling and set timeout to hide
+messages.forEach(message => {
+    // Apply styling
+    message.style.display = 'block';
+
+    // Hide message after 2 seconds
+    setTimeout(() => {
+        message.style.display = 'none';
+    }, 2000); // 2 seconds (2000 milliseconds)
+});
+  </script>
+  
+
+</body>
+</html>
