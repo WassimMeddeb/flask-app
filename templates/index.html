@@ -1,412 +1,583 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <title>Automated Automotive Cybersecurity Monitoring for E/E Components in Vehicles</title>
-  <!-- Bootstrap core CSS -->
-  <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="../static/css/main.css" rel="stylesheet" />
-  <link rel="shortcut icon" href="../static/images/fav.ico" type="image/x-icon" />
-  <!-- Plotly.js -->
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <style>
-    /* Custom Navbar Styles */
-    .navbar {
-      background-color: #0097ac; /* Navbar Background Color */
-    }
-  
-    .navbar-brand {
-      color: #ffffff; /* Navbar Brand Text Color */
-      font-size: 20px; /* Navbar Brand Font Size */
-    }
-  
-    .navbar-toggler {
-      border-color: #ffffff; /* Navbar Toggler Color */
-    }
-  
-    .navbar-toggler-icon {
-      background-color: #ffffff; /* Navbar Toggler Icon Color */
-    }
-  
-    .navbar-nav .nav-link {
-      color: #ffffff; /* Navbar Links Text Color */
-      font-size: 16px; /* Navbar Links Font Size */
-    }
-  
-    .navbar-nav .nav-link:hover {
-      color: #f0efef; /* Navbar Links Hover Text Color */
-    }
-  
-    .btn-outline-secondary {
-      color: #ffffff; /* Button Text Color */
-      border-color: #ffffff; /* Button Border Color */
-      padding: 4px 12px; /* Button Padding */
-      background-color: transparent; /* Transparent Background */
-      transition: all 0.3s ease; /* Smooth Transition */
-    }
-  
-    .btn-outline-secondary:hover {
-      color: #0097ac; /* Button Text Color on Hover */
-      background-color: #ffffff; /* Button Background Color on Hover */
-      border-color: #ffffff; /* Button Border Color on Hover */
-    }
-  
-    .message {
-      display: none;
-      position: fixed;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 10px;
-      border-radius: 5px;
-      color: #fff;
-      font-weight: bold;
-      z-index: 9999;
-    }
-  
-    .error {
-      background-color: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-      background-color: #dc3545;
-    }
-  
-    .success {
-      background-color: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-      background-color: #28a745;
-    }
-  
-    .info {
-      background-color: #1096bf;
-      color: #ffffff;
-      border: 1px solid #c3e6cb;
-    }
-  
-    /* Sidebar Styles */
-    .sidebar {
-      height: 100%;
-      width: 330px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background-color: #ffffff;
-      padding-top: 30px;
-      overflow-y: auto; /* Enable scrolling if content exceeds the height */
-    }
-  
-    .Scan {
-      display: flex;
-      justify-content: space-between; /* Places the elements at the beginning and end */
-      padding: 50px;
-      color: white;
-    }
-  
-    .buttons-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center; /* Center items vertically */
-      margin-left: 10px;
-    }
-  
-    .buttons-container .button {
-      background-color: #0097ac;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-      font-size: 16px;
-      margin: 4px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-  
-    .apply-filters-button {
-      background-color: #0097ac;
-      color: white;
-      border: none;
-      padding: 10px;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-left: auto; /* Aligns the button to the right */
-    }
-  
-    .word-section {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px;
-      margin: auto;
-      color: #6f6f6f;
-    }
-  
-    .words {
-      color: #6f6f6f;
-      margin-right: 10px;
-    }
-  
-    .grey-section {
-      height: 200px; /* Adjust the height of the gap */
-      background-color: #ccc; /* Grey color */
-      /* Add some space between sections */
-    }
-  
-    /* Adjust main content to make space for sidebar */
-    .main-content {
-      margin-left: 330px; /* Width of the sidebar */
-      padding-left: 15px; /* Adjust padding for better layout */
-      width: calc(100% - 330px); /* Adjust width */
-      float: right; /* Float content to the right */
-    }
-  </style>
-  
-</head>
-<body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="Scan">
-      <div class="word-section">Scan Section</div>
-      <button class="apply-filters-button">Apply Filters</button>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>
+      Automated Automotive Cybersecurity Monitoring for E/E Components in
+      Vehicles
+    </title>
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../static/css/main.css" rel="stylesheet" />
+    <link
+      rel="shortcut icon"
+      href="../static/images/fav.ico"
+      type="image/x-icon"
+    />
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+      /* Custom Navbar Styles */
+      .navbar {
+        background-color: #0097ac; /* Navbar Background Color */
+      }
+
+      .navbar-brand {
+        color: #ffffff; /* Navbar Brand Text Color */
+        font-size: 20px; /* Navbar Brand Font Size */
+      }
+
+      .navbar-toggler {
+        border-color: #ffffff; /* Navbar Toggler Color */
+      }
+
+      .navbar-toggler-icon {
+        background-color: #ffffff; /* Navbar Toggler Icon Color */
+      }
+
+      .navbar-nav .nav-link {
+        color: #ffffff; /* Navbar Links Text Color */
+        font-size: 16px; /* Navbar Links Font Size */
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: #f0efef; /* Navbar Links Hover Text Color */
+      }
+
+      .btn-outline-secondary {
+        color: #ffffff; /* Button Text Color */
+        border-color: #ffffff; /* Button Border Color */
+        padding: 4px 12px; /* Button Padding */
+        background-color: transparent; /* Transparent Background */
+        transition: all 0.3s ease; /* Smooth Transition */
+      }
+
+      .btn-outline-secondary:hover {
+        color: #0097ac; /* Button Text Color on Hover */
+        background-color: #ffffff; /* Button Background Color on Hover */
+        border-color: #ffffff; /* Button Border Color on Hover */
+      }
+
+      .message {
+        display: none;
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: bold;
+        z-index: 9999;
+      }
+
+      .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        background-color: #dc3545;
+      }
+
+      .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        background-color: #28a745;
+      }
+
+      .info {
+        background-color: #1096bf;
+        color: #ffffff;
+        border: 1px solid #c3e6cb;
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        height: 100%;
+        width: 330px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #ffffff;
+        padding-top: 30px;
+        overflow-y: auto; /* Enable scrolling if content exceeds the height */
+      }
+
+      .Scan {
+        display: flex;
+        justify-content: space-between; /* Places the elements at the beginning and end */
+        padding: 50px;
+        color: white;
+      }
+
+      .buttons-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center; /* Center items vertically */
+        margin-left: 10px;
+      }
+
+      .buttons-container .button {
+        background-color: #0097ac;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+        margin: 4px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .apply-filters-button {
+        background-color: #0097ac;
+        color: white;
+        border: none;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-left: auto; /* Aligns the button to the right */
+      }
+
+      .word-section {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        margin: auto;
+        color: #6f6f6f;
+      }
+
+      .words {
+        color: #6f6f6f;
+        margin-right: 10px;
+      }
+
+      .grey-section {
+        height: 200px; /* Adjust the height of the gap */
+        background-color: #ccc; /* Grey color */
+        /* Add some space between sections */
+      }
+
+      /* Adjust main content to make space for sidebar */
+      .main-content {
+        margin-left: 330px; /* Width of the sidebar */
+        padding-left: 15px; /* Adjust padding for better layout */
+        width: calc(100% - 330px); /* Adjust width */
+        float: right; /* Float content to the right */
+      }
+      #add_popup {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgb(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        display: none;
+        place-items: center;
+        z-index: 5;
+      }
+      #add_popup .popup_container {
+        background-color: #ffffff;
+        padding: 1rem;
+      }
+      /* styles.css  for popup */
+
+
+/* styles.css */
+
+/* Center the popup container horizontally */
+#add_popup {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+/* Style for the h4 heading */
+h4 {
+ 
+  margin-bottom: 100px;
+  font-size: 20px; /* Increased font size */
+  color: #0097AC;
+  text-align: center;
+}
+/* Style for the popup container */
+.popup_container {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Adding border radius */
+  padding: 30px; /* Increased padding */
+  width: 717px; /* Adjusted width */
+  height: 561px; /* Adjusted height */
+  position: absolute;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  justify-content: center; /* Center horizontally */
+  display: flex;
+  flex-direction: column; /* Display as a column */
+}
+
+/* Style for the close button */
+#close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #FF3648;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  padding: 10px 20px;
+}
+
+/* Style for the Save button */
+#save {
+  background-color: #0097ac;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  padding: 10px 20px;/* Increased margin top */
+}
+
+/* Style for the input groups */
+.input_group {
+  display: table-row; /* Display as table row */
+  margin-bottom: 30px; /* Increased margin bottom */
+}
+
+
+
+/* Change input border color on focus */
+.input_group input[type="text"]:focus {
+  border-color: #35AEBF; /* Change border color when focused */
+}
+
+
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.column:last-child {
+  margin-right: 0;
+}
+
+
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="Scan">
+        <div class="word-section">Scan Section</div>
+        <button class="apply-filters-button">Apply Filters</button>
+      </div>
+
+      <div class="buttons-container">
+        <div class="words">Projects</div>
+        <button class="button">Edit</button>
+        <button class="button">Delete</button>
+        <button class="button" id="add">Add</button>
+      </div>
+      <div class="grey-section"></div>
+      <div class="buttons-container">
+        <div class="words">Triggers</div>
+        <button class="button">Edit</button>
+        <button class="button">Delete</button>
+        <button class="button">Add</button>
+      </div>
+      <div class="grey-section"></div>
     </div>
 
-    <div class="buttons-container">
-      <div class="words">Projects</div>
-      <button class="button">Edit</button>
-      <button class="button">Delete</button>
-      <button class="button">Add</button>
-    </div>
-    <div class="grey-section"></div>
-    <div class="buttons-container">
-      <div class="words">Triggers</div>
-      <button class="button">Edit</button>
-      <button class="button">Delete</button>
-      <button class="button">Add</button>
-    </div>
-    <div class="grey-section"></div>
-  </div>
-
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-sm" style="height: 50px">
-    <div class="container-fluid">
-      <img
-        src="../static/images/DRAEXLMAIER.png"
-        style="
-          position: relative;
-          width: auto;
-          height: 25px;
-          margin-right: 10px;
-        "
-      />
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="collapse navbar-collapse justify-content-between"
-        id="navbarSupportedContent"
-      >
-        <form class="d-flex" role="search">
-          <input
-            class="form-control"
-            type="search"
-            placeholder="Type here..."
-            aria-label="Search"
-            style="border-radius: 24px; padding: 4px; margin-right: 10px"
-          />
-          <button
-            class="btn btn-outline-secondary"
-            style="padding: 4px 12px"
-            type="submit"
-          >
-            Search
-          </button>
-        </form>
-        <a
-          href="/home"
-          class="btn btn-outline-secondary"
-          style="margin-right: 200px"
-          value="Home"
-          >Home</a
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-sm" style="height: 50px">
+      <div class="container-fluid">
+        <img
+          src="../static/images/DRAEXLMAIER.png"
+          style="
+            position: relative;
+            width: auto;
+            height: 25px;
+            margin-right: 10px;
+          "
+        />
+  
+          <a class="navbar-brand" href="/home">Automotive Cybersecurity</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
-      </div>
-      <ul
-        class="navbar-nav px-3"
-        style="display: flex; flex-direction: row; align-items: center"
-      >
-        <li class="nav-item text-nowrap">
-          <span class="nav-link" href="" style="color: #ffffff"
-            >{{ username }}</span
-          >
-          <!-- Print username here -->
-        </li>
-        <li class="nav-item text-nowrap mt-1 ml-1">
-          <form method="POST">
-            <a
-              href="/logout"
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarSupportedContent"
+        >
+          <form class="d-flex" role="search">
+            <input
+              class="form-control"
+              type="search"
+              placeholder="Type here..."
+              aria-label="Search"
+              style="border-radius: 24px; padding: 4px; margin-right: 10px"
+            />
+            <button
               class="btn btn-outline-secondary"
-              value="Sign out"
-              >Sign out</a
+              style="padding: 4px 12px"
+              type="submit"
             >
+              Search
+            </button>
           </form>
-        </li>
-      </ul>
+          <a
+            href="/home"
+            class="btn btn-outline-secondary"
+            style="margin-right: 200px"
+            value="Home"
+            >Home</a
+          >
+        </div>
+        <ul
+          class="navbar-nav px-3"
+          style="display: flex; flex-direction: row; align-items: center"
+        >
+          <li class="nav-item text-nowrap">
+            <span class="nav-link" href="" style="color: #ffffff"
+              >{{ username }}</span
+            >
+            <!-- Print username here -->
+          </li>
+          <li class="nav-item text-nowrap mt-1 ml-1">
+            <form method="POST">
+              <a
+                href="/logout"
+                class="btn btn-outline-secondary"
+                value="Sign out"
+                >Sign out</a
+              >
+            </form>
+          </li>
+        </ul>
+      </>
+    </nav>
+
+    <!-- Main Section with Charts -->
+    <div class="main-content container-fluid">
+      <div class="row chart-container">
+        <!-- First Bar Chart (0 to 1000 on y-axis, Jan to Dec on x-axis) -->
+        <div class="col-md-12" style="margin-bottom: 20px">
+          <div class="chart" id="bar-chart-1"></div>
+        </div>
+
+        <!-- Pie Chart (50% width) -->
+        <div class="col-md-6">
+          <div class="chart" id="pie-chart"></div>
+        </div>
+
+        <!-- Second Bar Chart (50% width) -->
+        <div class="col-md-6">
+          <div class="chart" id="bar-chart-2"></div>
+        </div>
+      </div>
     </div>
-  </nav>
-
-  <!-- Main Section with Charts -->
-  <div class="main-content container-fluid">
-    <div class="row chart-container">
-      <!-- First Bar Chart (0 to 1000 on y-axis, Jan to Dec on x-axis) -->
-      <div class="col-md-12" style="margin-bottom: 20px">
-        <div class="chart" id="bar-chart-1"></div>
-      </div>
-
-      <!-- Pie Chart (50% width) -->
-      <div class="col-md-6">
-        <div class="chart" id="pie-chart"></div>
-      </div>
-
-      <!-- Second Bar Chart (50% width) -->
-      <div class="col-md-6">
-        <div class="chart" id="bar-chart-2"></div>
+    <div id="add_popup">
+      <div class="popup_container">
+        <button id="close">close</button> 
+        <button id="save" type="submit">Save</button>
+        <h4>Adding a New Project</h4>
+        <div class="row">
+          <label for="name">Project Name</label>
+          <input type="text" name="ProjectName" />
+        </div>
+        <div class="row">
+          <label for="name">Creation Date</label>
+          <input type="text" name="date" value="{{ current_date }}" readonly />
+        </div>
+        <div class="row">
+          <label for="name">Name of The creator</label>
+          <input type="text" value="{{ username }}" readonly />
+        </div>
+        <div class="row">
+          <label for="name">CSM Project</label>
+          <input type="text" name="CSM" />
+        </div>
+        <div class="row">
+          <label for="name">CSE Project</label>
+          <input type="text" name="CSE" />
+        </div>
+        <div class="row">
+          <label for="name">MPL-Main Project lead</label>
+          <input type="text" name="MPL" />
+        </div>
       </div>
     </div>
-  </div>
+    
 
-  <!-- Scripts -->
-  <script>
-    // Sample Data for Bar Chart 1 (0 to 1000 on y-axis, Jan to Dec on x-axis)
-    const barData1 = {
-      x: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      y: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 900, 800],
-      type: "bar",
-      name: "Total Vulnerabilities Monthly  ",
-      marker: {
-        color: "rgba(0, 151, 172, 0.8)",
-      },
-    };
+    <!-- Scripts -->
+    <script>
+      // Sample Data for Bar Chart 1 (0 to 1000 on y-axis, Jan to Dec on x-axis)
+      const barData1 = {
+        x: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+        y: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 900, 800],
+        type: "bar",
+        name: "Total Vulnerabilities Monthly  ",
+        marker: {
+          color: "rgba(0, 151, 172, 0.8)",
+        },
+      };
 
-    // Layout for Bar Chart 1
-    const barLayout1 = {
-      title: "Total Vulnerabilities Monthly  ",
-      xaxis: {
-        title: "Month",
-      },
-      yaxis: {
-        title: "Vulnerabilities",
-        range: [0, 1000],
-      },
-      plot_bgcolor: "rgba(240, 239, 239, 0.55)",
-      paper_bgcolor: "rgba(240, 239, 239, 0.55)",
-    };
+      // Layout for Bar Chart 1
+      const barLayout1 = {
+        title: "Total Vulnerabilities Monthly  ",
+        xaxis: {
+          title: "Month",
+        },
+        yaxis: {
+          title: "Vulnerabilities",
+          range: [0, 1000],
+        },
+        plot_bgcolor: "rgba(240, 239, 239, 0.55)",
+        paper_bgcolor: "rgba(240, 239, 239, 0.55)",
+      };
 
-    // Sample Data for Pie Chart
-    const pieData = {
-      values: [20, 30, 50],
-      labels: ["High", "Medium", "Low"],
-      type: "pie",
-      hole: 0.7,
-      name: "Total Vulnerabilities Rating   ",
-      marker: {
-        colors: ["#FF0016", "#FFB800", "#05FF00"],
-      },
-    };
+      // Sample Data for Pie Chart
+      const pieData = {
+        values: [20, 30, 50],
+        labels: ["High", "Medium", "Low"],
+        type: "pie",
+        hole: 0.7,
+        name: "Total Vulnerabilities Rating   ",
+        marker: {
+          colors: ["#FF0016", "#FFB800", "#05FF00"],
+        },
+      };
 
-    // Layout for Pie Chart
-    const pieLayout = {
-      title: "Total Vulnerabilities Rating   ",
-      plot_bgcolor: "rgba(240, 239, 239, 0.55)",
-      paper_bgcolor: "rgba(240, 239, 239, 0.55)",
-    };
+      // Layout for Pie Chart
+      const pieLayout = {
+        title: "Total Vulnerabilities Rating   ",
+        plot_bgcolor: "rgba(240, 239, 239, 0.55)",
+        paper_bgcolor: "rgba(240, 239, 239, 0.55)",
+      };
 
-    // Sample Data for Bar Chart 2
-    const barData2 = {
-      x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-      y: [
-        50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700,
-      ],
-      type: "bar",
-      name: "Vulnerabilities splitted by projects",
-      marker: {
-        color: "rgba(105, 228, 215, 0.8)",
-      },
-    };
+      // Sample Data for Bar Chart 2
+      const barData2 = {
+        x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+        y: [
+          50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700,
+        ],
+        type: "bar",
+        name: "Vulnerabilities splitted by projects",
+        marker: {
+          color: "rgba(105, 228, 215, 0.8)",
+        },
+      };
 
-    const barLayout2 = {
-      title: "Vulnerabilities splitted by projects",
-      xaxis: {
-        title: "Projects",
-        range: [0, 14],
-      },
-      yaxis: {
-        title: "Vulnerabilities",
-        range: [0, 700],
-      },
-      plot_bgcolor: "rgba(240, 239, 239, 0.55)",
-      paper_bgcolor: "rgba(240, 239, 239, 0.55)",
-    };
+      const barLayout2 = {
+        title: "Vulnerabilities splitted by projects",
+        xaxis: {
+          title: "Projects",
+          range: [0, 14],
+        },
+        yaxis: {
+          title: "Vulnerabilities",
+          range: [0, 700],
+        },
+        plot_bgcolor: "rgba(240, 239, 239, 0.55)",
+        paper_bgcolor: "rgba(240, 239, 239, 0.55)",
+      };
 
-    // Create Charts
-    Plotly.newPlot("bar-chart-1", [barData1], barLayout1);
-    Plotly.newPlot("pie-chart", [pieData], pieLayout);
-    Plotly.newPlot("bar-chart-2", [barData2], barLayout2);
-    const messages = document.querySelectorAll(".message");
+      // Create Charts
+      Plotly.newPlot("bar-chart-1", [barData1], barLayout1);
+      Plotly.newPlot("pie-chart", [pieData], pieLayout);
+      Plotly.newPlot("bar-chart-2", [barData2], barLayout2);
+      const messages = document.querySelectorAll(".message");
 
-    // Loop through each message to apply styling and set timeout to hide
-    messages.forEach((message) => {
-      // Apply styling
-      message.style.display = "block";
+      // Loop through each message to apply styling and set timeout to hide
+      messages.forEach((message) => {
+        // Apply styling
+        message.style.display = "block";
 
-      // Hide message after 2 seconds
-      setTimeout(() => {
-        message.style.display = "none";
-      }, 2000); // 2 seconds (2000 milliseconds)
-    });
-  </script>
+        // Hide message after 2 seconds
+        setTimeout(() => {
+          message.style.display = "none";
+        }, 2000); // 2 seconds (2000 milliseconds)
+      });
 
-  <!-- Bootstrap JS -->
-  <script
-    src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"
-  ></script>
-  <script>
-    window.jQuery ||
-      document.write(
-        '<script src="/docs/4.4/static/js/vendor/jquery.slim.min.js"><\/script>'
-      );
-  </script>
-  <script
-    src="/docs/4.4/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-    crossorigin="anonymous"
-  ></script>
-</body>
+      const add_btn = document.querySelector("#add");
+      const close_btn = document.querySelector("#close");
+
+      close_btn.addEventListener("click", () => {
+        add_popup.style.display = "none";
+      });
+
+      const add_popup = document.querySelector("#add_popup");
+      add_btn.addEventListener("click", () => {
+        add_popup.style.display = "grid";
+      });
+      /* const edit_btn = document.querySelector("#edit") 
+const edit_popup = document.querySelector("#edit_popup")
+ edit_btn.addEventListener ("click", ()=>{
+edit_popup.style.display='grid';
+
+
+ })
+*/
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      window.jQuery ||
+        document.write(
+          '<script src="/docs/4.4/static/js/vendor/jquery.slim.min.js"><\/script>'
+        );
+    </script>
+    <script
+      src="/docs/4.4/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
