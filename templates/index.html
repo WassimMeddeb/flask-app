@@ -175,7 +175,7 @@
         width: calc(100% - 330px); /* Adjust width */
         float: right; /* Float content to the right */
       }
-      #add_popup {
+      #add_popup , #edit_popup , #add_trigger , #edit_trigger {
         position: absolute;
         top: 0;
         left: 0;
@@ -186,22 +186,20 @@
         place-items: center;
         z-index: 5;
       }
-      #add_popup .popup_container {
-        background-color: #ffffff;
-        padding: 1rem;
-      }
+                    
       /* styles.css  for popup */
 
 
 /* styles.css */
 
 /* Center the popup container horizontally */
-#add_popup {
+#add_popup , #edit_popup , #add_trigger , #edit_trigger {
   display: none;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
+
 /* Style for the h4 heading */
 h4 {
  
@@ -226,7 +224,7 @@ h4 {
 }
 
 /* Style for the close button */
-#close {
+#close , #close2 , #close3 , #close4 {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -295,16 +293,16 @@ h4 {
 
       <div class="buttons-container">
         <div class="words">Projects</div>
-        <button class="button">Edit</button>
+        <button class="button" id="edit">Edit</button>
         <button class="button">Delete</button>
         <button class="button" id="add">Add</button>
       </div>
       <div class="grey-section"></div>
       <div class="buttons-container">
         <div class="words">Triggers</div>
-        <button class="button">Edit</button>
+        <button class="button" id="edit2">Edit</button>
         <button class="button">Delete</button>
-        <button class="button">Add</button>
+        <button class="button" id="add2">Add</button>
       </div>
       <div class="grey-section"></div>
     </div>
@@ -436,8 +434,84 @@ h4 {
         </div>
       </div>
     </div>
-    
+    <div id="edit_popup">
+      <div class="popup_container">
+        <button id="close2">close</button> 
+        <button id="save" type="submit">Save</button>
+        <h4>Edit a Project</h4>
+        <div class="row">
+          <label for="name">Project Name</label>
+          <input type="text" name="ProjectName" />
+        </div>
+        <div class="row">
+          <label for="name">Edit Date</label>
+          <input type="text" name="date" value="{{ current_date }}" readonly />
+        </div>
+        <div class="row">
+          <label for="name">Name of The Editor</label>
+          <input type="text" value="{{ username }}" readonly />
+        </div>
+        <div class="row">
+          <label for="name">CSM Project</label>
+          <input type="text" name="CSM" />
+        </div>
+        <div class="row">
+          <label for="name">CSE Project</label>
+          <input type="text" name="CSE" />
+        </div>
+        <div class="row">
+          <label for="name">MPL-Main Project lead</label>
+          <input type="text" name="MPL" />
+        </div>
+      </div>
+    </div>
 
+
+    <div id="add_trigger">
+      <div class="popup_container">
+        <button id="close3">close</button> 
+        <button id="save" type="submit">Save</button>
+        <h4>Adding a New Trigger</h4>
+        <div class="row">
+          <label for="name">Trigger Name</label>
+          <input type="text" name="TriggerName" />
+        </div>
+        <div class="row">
+          <label for="name">Components/Function</label>
+          <input type="text" name="Components/Function" />
+        </div>
+        <div class="row">
+          <label for="name">Supplier</label>
+          <input type="text" name="Supplier"/>
+        </div>
+        <div class="row">
+          <label for="name">Version</label>
+          <input type="text" name="Version"/>
+        </div>
+       
+      </div>
+      
+
+      <div id="edit_trigger">
+        <div class="popup_container">
+          <button id="close4">close</button> 
+          <button id="save" type="submit">Save</button>
+          <h4>Edit a Trigger</h4>
+          <div class="row">
+            <label for="name">Components/Function</label>
+            <input type="text" name="ProjectName" />
+          </div>
+          <div class="row">
+            <label for="name">Supplier </label>
+            <input type="text" name="Supplier" />
+          </div>
+          <div class="row">
+            <label for="name">Version</label>
+            <input type="text" name="Version" />
+          </div>
+        </div>
+      </div>
+    
     <!-- Scripts -->
     <script>
       // Sample Data for Bar Chart 1 (0 to 1000 on y-axis, Jan to Dec on x-axis)
@@ -543,23 +617,42 @@ h4 {
 
       const add_btn = document.querySelector("#add");
       const close_btn = document.querySelector("#close");
+      const add_popup = document.querySelector("#add_popup");
+
+      const add_btn2 = document.querySelector("#add2");
+      const close_btn3 = document.querySelector("#close3");
+  
 
       close_btn.addEventListener("click", () => {
         add_popup.style.display = "none";
       });
 
-      const add_popup = document.querySelector("#add_popup");
+
+    
       add_btn.addEventListener("click", () => {
-        add_popup.style.display = "grid";
+      add_popup.style.display = "grid";
       });
-      /* const edit_btn = document.querySelector("#edit") 
-const edit_popup = document.querySelector("#edit_popup")
- edit_btn.addEventListener ("click", ()=>{
-edit_popup.style.display='grid';
+
+      
+
+       
+ 
+    
+ 
+      
+ 
+       const add_trigger = document.querySelector("#add_trigger");
+       add_btn2.addEventListener("click", () => {
+       add_trigger.style.display = "grid";
+       });
+       close_btn3.addEventListener("click", () => {
+        add_trigger.style.display = "none";
+      });
+       
+       
+      
 
 
- })
-*/
     </script>
 
     <!-- Bootstrap JS -->
